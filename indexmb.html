@@ -12406,6 +12406,13 @@
     }
     
     function getTraderTier(totalProfitLoss = 0) {
+        if (typeof currentUserData !== 'undefined' && currentUserData) {
+            const explicitTier = (currentUserData.tier || currentUserData.accountTier || '').toLowerCase();
+            if (explicitTier === 'master') return { key: 'master', label: 'Master' };
+            if (explicitTier === 'pro') return { key: 'pro', label: 'Pro Trader' };
+            if (explicitTier === 'trader') return { key: 'trader', label: 'Trader' };
+            if (explicitTier === 'beginner') return { key: 'beginner', label: 'Beginner' };
+        }
         if (totalProfitLoss >= 500000) return { key: 'master', label: 'Master' };
         if (totalProfitLoss >= 100000) return { key: 'pro', label: 'Pro Trader' };
         if (totalProfitLoss >= 10000) return { key: 'trader', label: 'Trader' };
